@@ -2,6 +2,24 @@ import pybullet as p
 import pybullet_data
 import time
 
+def print_joint_info(robot_id):
+    """打印机器人所有关节的信息"""
+    num_joints = p.getNumJoints(robot_id)
+    print(f"\n机器人总关节数: {num_joints}")
+    print("\n关节信息:")
+    print("-" * 50)
+    
+    for joint_id in range(num_joints):
+        # 修正：添加joint_id参数
+        joint_info = p.getJointInfo(robot_id, joint_id)
+        print(f"关节 ID: {joint_id}")
+        print(f"关节名称: {joint_info[1].decode('utf-8')}")
+        print(f"关节类型: {joint_info[2]}")
+        print(f"第一个位置索引: {joint_info[3]}")
+        print(f"第一个速度索引: {joint_info[4]}")
+        print(f"父链接索引: {joint_info[16]}")
+        print("-" * 50)
+
 def test_robot_model():
     # 初始化PyBullet
     physics_client = p.connect(p.GUI)
@@ -23,7 +41,9 @@ def test_robot_model():
     
     # 加载机器人模型
     robot = p.loadURDF("robot.urdf", [0, 0, 0.1])
-    
+    print_joint_info(robot)
+
+    return
     # 保持窗口打开一段时间
     print("按 q 键退出...")
     while p.isConnected():
