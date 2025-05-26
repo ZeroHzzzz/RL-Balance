@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot name="car">
+  <link name="world"/>
+
+  <material name="blue">
+    <color rgba="0.2 0.4 0.8 1.0"/> 
+  </material>
+  
+  <material name="black">
+    <color rgba="0.1 0.1 0.1 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="1.0 0.0 0.0 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <inertial>
+      <mass value="0.3"/> 
+      <inertia 
+        ixx="0.00154"  
+        iyy="0.00364"  
+        izz="0.00385" 
+      />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20146 0.037 0.0974"/> 
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20146 0.037 0.0974"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel">
+    <inertial>
+      <mass value="0.02"/>
+      <inertia
+        ixx="0.000006125" 
+        iyy="0.000006125"
+        izz="0.00001225"  
+      />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/> 
+      <geometry>
+        <cylinder radius="0.035" length="0.0135"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.0135"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="flywheel1">
+    <inertial>
+        <mass value="0.167"/>
+        <inertia
+          ixx="0.0001336"
+          iyy="0.0001336"
+          izz="0.0001336"
+        />
+    </inertial>
+    <visual>
+        <origin xyz="0 0 0" rpy="1.0472 0 1.5708"/> <!-- 30°绕y轴 + 90°绕z轴 -->
+        <geometry>
+            <cylinder radius="0.04" length="0.006"/>
+        </geometry>
+        <material name="red"/>
+    </visual>
+
+    <collision>
+        <origin xyz="0 0 0" rpy="1.0472 0 1.5708"/>
+        <geometry>
+            <cylinder radius="0.04" length="0.006"/>
+        </geometry>
+    </collision>
+  </link>
+
+  <link name="flywheel2">
+    <inertial>
+        <mass value="0.167"/>
+        <inertia
+          ixx="0.0001336"
+          iyy="0.0001336"
+          izz="0.0001336"
+        />
+    </inertial>
+    <visual>
+        <origin xyz="0 0 0" rpy="-1.0472 0 1.5708"/> <!-- 30°绕y轴 + 90°绕z轴 -->
+        <geometry>
+            <cylinder radius="0.04" length="0.006"/>
+        </geometry>
+        <material name="red"/>
+    </visual>
+
+    <collision>
+        <origin xyz="0 0 0" rpy="-1.0472 0 1.5708"/>
+        <geometry>
+            <cylinder radius="0.04" length="0.006"/>
+        </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.04" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="wheel"/>
+    <origin xyz="0 0 -0.04" rpy="0 0 0"/> 
+    <axis xyz="0 1 0"/>  
+  </joint>
+
+  <joint name="flywheel1_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="flywheel1"/>
+    <origin xyz="0.05 0 0" rpy="0 0 0"/> 
+    <axis xyz="0.866 0 0.5"/> <!-- 旋转轴沿z轴 -->
+  </joint>
+
+  <joint name="flywheel2_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="flywheel2"/>
+    <origin xyz="-0.05 0 0" rpy="0 0 0"/> 
+    <axis xyz="0.866 0 -0.5"/> <!-- 旋转轴沿z轴 -->
+  </joint>
+</robot>

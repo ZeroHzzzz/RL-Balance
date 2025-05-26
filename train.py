@@ -2,11 +2,12 @@ from robotEnv import BalanceRobotEnv
 from model import PPOAgent
 import torch
 import numpy as np
+import time
 
 # 创建环境和智能体
 env = BalanceRobotEnv()
-state_dim = env.observation_space.shape[0]
-action_dim = env.action_space.shape[0]
+state_dim = 8
+action_dim = 1
 agent = PPOAgent(state_dim, action_dim)
 
 # 训练参数
@@ -15,6 +16,7 @@ max_steps = 1000
 
 # 训练循环
 for episode in range(num_episodes):
+    print(f"Episode {episode + 1}/{num_episodes}")
     state = env.reset()[0]
     total_reward = 0
     
@@ -26,7 +28,8 @@ for episode in range(num_episodes):
         
         # 执行动作
         next_state, reward, done, _, _ = env.step(action)
-        
+        print(next_state)
+        time.sleep(0.01)
         # 存储transition
         agent.store_transition(
             state, action, reward, next_state, done, 
