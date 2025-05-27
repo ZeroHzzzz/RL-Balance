@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="car">
-  <link name="world"/>
+  <!-- <link name="world"/> -->
 
   <material name="blue">
     <color rgba="0.2 0.4 0.8 1.0"/> 
@@ -116,17 +116,18 @@
     </collision>
   </link>
 
-  <joint name="base_joint" type="fixed">
+  <!-- <joint name="base_joint" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
     <origin xyz="0 0 0.04" rpy="0 0 0"/>
-  </joint>
+  </joint> -->
 
   <joint name="wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel"/>
     <origin xyz="0 0 -0.04" rpy="0 0 0"/> 
     <axis xyz="0 1 0"/>  
+    <dynamics friction="0.001" damping="0.001"/>
   </joint>
 
   <joint name="flywheel1_joint" type="continuous">

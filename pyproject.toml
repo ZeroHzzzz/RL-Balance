@@ -1,7 +1,7 @@
 [project]
 name = "test-rl"
 version = "0.1.0"
-description = "Add your description here"
+description = "强化学习平衡车控制器"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -9,8 +9,14 @@ dependencies = [
     "matplotlib>=3.10.3",
     "pybullet>=3.2.7",
     "torch==2.7.0",
+    "stable-baselines3>=2.2.1",
+    "tensorboard>=2.15.0",
+    "numpy>=1.26.0",
 ]
 
 [[tool.uv.index]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
+
+[tool.uv.workspace]
+members = ["balance"]
